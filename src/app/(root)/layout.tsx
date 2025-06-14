@@ -1,6 +1,6 @@
 // src/app/(root)/layout.tsx
 
-import "../styles/globals.css";
+import "@/styles/globals.css";
 import { ReactNode } from "react";
 import { Navbar } from "@/components/navbar";
 

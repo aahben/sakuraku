@@ -1,71 +1,99 @@
-"use client";
+"use client"
 
-import Link from "next/link";
+import * as React from "react"
+import Link from "next/link"
 import {
   NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
   NavigationMenuContent,
-} from "@/components/ui/navigation-menu";
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
 
-export default function Navbar() {
+export function Navbar() {
   return (
-    <header className="w-full bg-[#ecebe4] shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between mb-6">
-        {/* Logo + Company Name */}
-        <Link href="/" className="flex items-center gap-3">
-          <img
-            src="/monkey-logo.jpg"
-            alt="Logo"
-            className="h-8 w-auto max-w-[32px] object-contain"
-          />
-          <span className="text-xl font-bold text-[#1c1c1c] whitespace-nowrap">
-            猿楽管理株式会社
-          </span>
-        </Link>
+    <div className="w-full border-b shadow-sm bg-background">
+      <div className="relative max-w-screen-xl mx-auto px-4 py-4">
+        <NavigationMenu className="flex justify-between w-full">
+          <NavigationMenuList className="flex gap-6 items-center">
+            {/* Home */}
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={`${navigationMenuTriggerStyle()} text-lg font-bold px-2`}
+              >
+                <Link href="/">猿楽管理株式会社</Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
 
-        {/* Navigation Menu */}
-        <nav className="flex items-center gap-x-6 text-sm font-medium text-[#1c1c1c]">
-          {/* Dropdown: 公司介紹 / 服務 */}
-          <NavigationMenu>
-            <NavigationMenuList className="flex">
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:text-[#daddd8] transition bg-transparent">
-                  公司介紹
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="bg-white p-4 shadow rounded mt-2">
-                  <ul className="grid gap-2 w-[200px]">
-                    <li>
-                      <Link href="/services#management" className="hover:text-[#1c1c1c]">
-                        不動產管理
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/services#consulting" className="hover:text-[#1c1c1c]">
-                        顧問服務
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/services#listing" className="hover:text-[#1c1c1c]">
-                        物件刊登
-                      </Link>
-                    </li>
+            {/* Dropdown menus */}
+            {navItems.map((item) => (
+              <NavigationMenuItem key={item.label}>
+                <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
+                <NavigationMenuContent className="mt-2 w-48 bg-popover text-popover-foreground rounded-md border shadow-md p-2">
+                  <ul className="grid w-[200px] gap-1">
+                    {item.links.map((link) => (
+                      <DropdownLink key={link.href} href={link.href} label={link.label} />
+                    ))}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-
-          {/* Static Links */}
-          <Link href="/gallery" className="hover:text-[#daddd8] transition">
-            持有不動產
-          </Link>
-          <Link href="/contact" className="hover:text-[#daddd8] transition">
-            聯繫
-          </Link>
-        </nav>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
-    </header>
-  );
+    </div>
+  )
 }
+
+function DropdownLink({ href, label }: { href: string; label: string }) {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <Link
+          href={href}
+          className="block rounded-sm px-3 py-2 text-sm font-normal transition-colors hover:bg-accent hover:text-accent-foreground"
+        >
+          {label}
+        </Link>
+      </NavigationMenuLink>
+    </li>
+  )
+}
+
+const navItems = [
+  {
+    label: "公司簡介",
+    links: [
+      { href: "/about/overview", label: "公司概況" },
+      { href: "/about/history", label: "成立背景" },
+      { href: "/about/team", label: "經營團隊" },
+    ],
+  },
+  {
+    label: "不動產管理",
+    links: [
+      { href: "/management/services", label: "服務項目" },
+      { href: "/management/process", label: "管理流程" },
+      { href: "/management/faq", label: "常見問題" },
+    ],
+  },
+  {
+    label: "投資與租賃",
+    links: [
+      { href: "/investment/properties", label: "物件資訊" },
+      { href: "/investment/strategy", label: "投資策略" },
+      { href: "/investment/lease", label: "租賃服務" },
+    ],
+  },
+  {
+    label: "聯繫我們",
+    links: [
+      { href: "/contact/info", label: "聯絡資訊" },
+      { href: "/contact/form", label: "聯絡表單" },
+      { href: "/contact/map", label: "交通位置" },
+    ],
+  },
+]

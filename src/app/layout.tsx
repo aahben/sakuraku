@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 import { Navbar } from "@/components/navbar"
 import { ImageSlider } from "@/components/ImageSlider"
 import { Metadata } from "next"
-import "@/styles/globals.css" // ← optional if you have global styles
+import "./globals.css" // ← optional if you have global styles
 
 export const metadata: Metadata = {
   title: "猿楽管理株式会社",

@@ -4,7 +4,7 @@ export default function AboutPage() {
       <h1 className="text-2xl font-bold mb-4">公司簡介</h1>
 
       <p className="text-base leading-relaxed">
-        猿樂管理株式會社成立於2010年5月19日，為一家族企業，主要的業務是在日本東京都內，經營不動產的買賣、出租及相關的管理。
+        猿樂管理株式會社成立於2010年5月19日。猿樂管理株式會社主要的業務是在日本東京都內，經營不動產的買賣、出租及相關的管理。
       </p>
 
       <div className="h-5" />
